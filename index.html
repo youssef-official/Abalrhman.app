@@ -234,10 +234,8 @@
             line-height: 1.6;
             transition: all 0.3s ease;
             position: relative;
-            /* ✨ التعديل لإصلاح عرض النصوص العربية والمنسقة */
             white-space: pre-wrap; 
             text-align: right; 
-            /* ------------------------------------------- */
         }
         
         .bubble:hover {
@@ -365,9 +363,7 @@
             color: #007bff;
             margin-bottom: 8px;
             transition: all 0.3s ease;
-            /* ✨ التعديل لإصلاح عرض النصوص العربية في التلميح */
             white-space: pre-wrap;
-            /* ------------------------------------------- */
         }
 
         body.dark-mode .translation-hint {
@@ -375,18 +371,71 @@
             color: #9fa8da;
         }
 
+        /* --- ✨ قسم اختيار النماذج الجديد --- */
+        .model-selector-area {
+            padding: 12px 24px 8px 24px;
+            background: var(--input-area-light);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        body.dark-mode .model-selector-area {
+            background: var(--input-area-dark);
+            border-top-color: rgba(255,255,255,0.05);
+        }
+        
+        .selector-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .selector-group label {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .selector-group select {
+            flex: 1;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 2px solid var(--input-bg-light);
+            background: var(--input-bg-light);
+            font-family: 'Cairo', sans-serif;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .selector-group select:focus {
+            outline: none;
+            border-color: #007bff;
+            background: var(--input-focus-light);
+        }
+
+        body.dark-mode .selector-group select {
+            border: 2px solid var(--input-bg-dark);
+            background: var(--input-bg-dark);
+            color: var(--text-dark);
+        }
+        
+        body.dark-mode .selector-group select:focus {
+            border-color: #007bff;
+            background: var(--input-focus-dark);
+        }
+
         .style-selector {
             display: flex;
             gap: 8px;
-            padding: 8px 24px;
+            padding: 0 24px 12px 24px; /* تم تعديل الحشو */
             background: var(--input-area-light);
-            border-top: 1px solid rgba(0,0,0,0.05);
             overflow-x: auto;
         }
 
         body.dark-mode .style-selector {
             background: var(--input-area-dark);
-            border-top-color: rgba(255,255,255,0.05);
         }
 
         .style-btn {
@@ -426,6 +475,8 @@
         body.dark-mode .style-btn.active {
             background: var(--bubble-user-dark);
         }
+        /* --- نهاية قسم النماذج --- */
+
 
         .input-area {
             display: flex;
@@ -554,7 +605,6 @@
             opacity: 0.85;
             color: #e2e8f0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            /* إضافة خلفية مناسبة للوضع الفاتح */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
         }
         
@@ -571,8 +621,17 @@
                 font-size: 24px;
             }
 
-            .style-selector {
-                padding: 8px 12px;
+            .model-selector-area, .style-selector {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            .selector-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            .selector-group select {
+                width: 100%;
             }
         }
     </style>
@@ -590,15 +649,25 @@
             <button id="themeToggle" class="theme-toggle" title="تبديل الوضع">🌙</button>
         </div>
 
-        <div class="style-selector">
-            <button class="style-btn active" data-style="text2img">عادي</button>
-            <button class="style-btn" data-style="anime">أنمي</button>
-            <button class="style-btn" data-style="fantasy">خيالي</button>
-            <button class="style-btn" data-style="photorealistic">واقعي</button>
-            <button class="style-btn" data-style="abstract">تجريدي</button>
-            <button class="style-btn" data-style="portrait">بورتريه</button>
+        <div class="model-selector-area">
+            <div class="selector-group">
+                <label for="textModelSelector">اختر نموذج الدردشة (OpenRouter):</label>
+                <select id="textModelSelector">
+                    <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+                    <option value="openai/gpt-4o">OpenAI GPT-4o</option>
+                    <option value="meta-llama/llama-3-70b-instruct">Llama 3 70B</option>
+                    <option value="google/gemini-pro-1.5">Google Gemini 1.5 Pro</option>
+                    <option value="mistralai/mistral-large">Mistral Large</option>
+                </select>
+            </div>
         </div>
-
+        
+        <div class="style-selector">
+            <button class="style-btn active" data-style="black-forest-labs/FLUX.1-dev" title="black-forest-labs/FLUX.1-dev">FLUX.1-dev (الأفضل)</button>
+            <button class="style-btn" data-style="stabilityai/stable-diffusion-xl-base-1.0" title="stabilityai/stable-diffusion-xl-base-1.0">Stable Diffusion XL</button>
+            <button class="style-btn" data-style="SG161222/RealVisXL_V4.0" title="SG161222/RealVisXL_V4.0">RealVisXL (واقعي)</button>
+            <button class="style-btn" data-style="dataautogpt3/OpenDalleV1.1" title="dataautogpt3/OpenDalleV1.1">OpenDalle V1.1</button>
+        </div>
         <div class="chat" id="chat"></div>
 
         <div class="input-area">
@@ -606,16 +675,32 @@
                 <div class="translation-hint" id="translationHint" style="display: none;"></div>
                 <textarea id="input" class="input" placeholder="اكتب رسالتك أو صف الصورة التي ترغب بتوليدها..." rows="1"></textarea>
             </div>
-            <button id="imgBtn" class="btn" title="توليد صورة">🎨</button>
-            <button id="sendBtn" class="btn" title="إرسال">➤</button>
+            <button id="imgBtn" class="btn" title="توليد صورة (Hugging Face)">🎨</button>
+            <button id="sendBtn" class="btn" title="إرسال (OpenRouter)">➤</button>
         </div>
     </div>
     <footer>© 2025 Viewst — جميع الحقوق محفوظة</footer>
 
     <script>
-        // **ملاحظة:** يجب استبدال هذا المفتاح بمفتاح Gemini API صالح لاستخدام وظيفة الدردشة
-        const API_KEY = "AIzaSyB5suX3XyKu9FD567xr_jIPsGSWYem51kg";
-        const TEXT_MODEL = "gemini-2.5-flash"; // تم التحديث لموديل أفضل
+        // -------------------------------------------------------------------------
+        // --- 🔴 تحذير أمني خطير 🔴 ---
+        // المفاتيح التالية مكشوفة لأي شخص يزور الموقع.
+        // لا تستخدم هذا الكود في بيئة إنتاج (production) بمفاتيح حقيقية.
+        // سيتم سرقة مفاتيحك. استخدم "خلفية" (Backend) لإخفاء المفاتيح.
+        // -------------------------------------------------------------------------
+        console.warn("🔴 تحذير أمني خطير: مفاتيح API مكشوفة في الكود! لا تستخدم هذا في بيئة إنتاج.");
+        
+        // ⚠️ ضع مفتاح OpenRouter الخاص بك هنا
+        const OPENROUTER_API_KEY = "sk-or-v1-abc123def456ghi789jkl0mno-pqrstuvwxyz"; 
+        
+        // ⚠️ هذا المفتاح مكشوف! قم بإلغائه من حسابك واستبداله فوراً
+        const HF_API_KEY = "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";
+        
+        // ⚠️ قم بتغيير هذا إلى رابط موقعك الفعلي (مطلوب لـ OpenRouter)
+        const YOUR_SITE_URL = "http://localhost:8000"; // أو https://your-domain.com
+
+        // -------------------------------------------------------------------------
+
         const USER_AVATAR_TEXT = '👤'; 
 
         const chat = document.getElementById('chat');
@@ -626,8 +711,10 @@
         const themeToggle = document.getElementById('themeToggle');
         const translationHint = document.getElementById('translationHint');
         const styleButtons = document.querySelectorAll('.style-btn');
+        const textModelSelector = document.getElementById('textModelSelector');
 
-        let currentStyle = 'text2img';
+        // `currentStyle` الآن يحمل اسم نموذج الصورة من Hugging Face
+        let currentStyle = 'black-forest-labs/FLUX.1-dev';
         let currentTranslation = '';
 
         // Initialize theme
@@ -645,7 +732,7 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
 
-        // Style selector events
+        // "محدد نموذج الصورة" (Style selector) events
         styleButtons.forEach(function(btn) {
             btn.addEventListener('click', function() {
                 styleButtons.forEach(function(b) {
@@ -653,6 +740,7 @@
                 });
                 btn.classList.add('active');
                 currentStyle = btn.getAttribute('data-style');
+                console.log("Image model changed to:", currentStyle);
             });
         });
 
@@ -663,6 +751,7 @@
 
             const text = this.value.trim();
             if (text.length > 0) {
+                // (ملاحظة: الترجمة تستخدم OpenRouter الآن)
                 updateTranslation(text);
             } else {
                 translationHint.style.display = 'none';
@@ -675,26 +764,44 @@
             return arabicRegex.test(text);
         }
 
-        // استخدام Gemini للترجمة وتحسين الوصف
+        // استخدام OpenRouter (Claude Sonnet) للترجمة وتحسين الوصف
         async function translateArabicToEnglish(text) {
-             const prompt = `Translate this Arabic image prompt to cinematic, highly detailed English for AI image generation: "${text}"`;
+             const prompt = `Translate this Arabic image prompt to cinematic, highly detailed English for AI image generation. Return ONLY the translated English prompt, nothing else: "${text}"`;
+             
+             // التحقق من المفتاح قبل إرسال الطلب
+             if (!OPENROUTER_API_KEY || OPENROUTER_API_KEY === "sk-or-v1-abc123def456ghi789jkl0mno-pqrstuvwxyz") {
+                 console.error('OpenRouter API Key غير صحيح. العودة إلى النص الأصلي.');
+                 return text;
+             }
+             
              try {
-                 const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + TEXT_MODEL + ':generateContent?key=' + API_KEY, {
+                 const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }] })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                        'HTTP-Referer': YOUR_SITE_URL, // مطلوب
+                        'X-Title': 'Viewst AI Chat' // اختياري
+                    },
+                    body: JSON.stringify({
+                        model: 'anthropic/claude-3.5-sonnet', // استخدام نموذج سريع وذكي للترجمة
+                        messages: [{ role: 'user', content: prompt }]
+                    })
                 });
+                
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
                 const data = await res.json();
-                let translated = data?.candidates?.[0]?.content?.parts?.[0]?.text || text;
+                let translated = data?.choices?.[0]?.message?.content || text;
                 return translated.replace(/^['"]|['"]$/g, ''); // إزالة علامات الاقتباس المحتملة
+             
              } catch (error) {
-                console.error('Gemini translation error, falling back to original text:', error);
+                console.error('OpenRouter translation error, falling back to original text:', error);
                 return text;
              }
         }
 
         async function updateTranslation(text) {
-            // إذا كان النص باللغة الإنجليزية (أو أي لغة غير العربية)، استخدمه مباشرة كترجمة
             if (!isArabic(text)) {
                 currentTranslation = text;
                 translationHint.textContent = '📝 الوصف: ' + text;
@@ -722,11 +829,10 @@
             document.body.appendChild(toast);
             setTimeout(function() {
                 toast.remove();
-            }, 2000);
+            }, 2500);
         }
 
         function copyText(text) {
-            // استخدام div مؤقت لتجنب مشاكل النسخ من InnerHTML
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = text;
             const tempText = tempDiv.textContent.replace(/<[^>]*>/g, '');
@@ -739,6 +845,7 @@
         }
 
         function downloadImage(url) {
+            // هذا يعمل مع 'blob:' URLs أيضاً
             fetch(url)
                 .then(function(res) {
                     return res.blob();
@@ -776,7 +883,6 @@
             bubble.className = 'bubble';
             bubble.innerHTML = html;
             
-            // إضافة أزرار الإجراءات للرسائل النصية
             if (rawText !== '...' && rawText !== 'جارٍ التوليد، يرجى الانتظار...') {
                 const actions = document.createElement('div');
                 actions.className = 'action-buttons';
@@ -862,10 +968,15 @@
             chat.scrollTop = chat.scrollHeight;
         }
 
-        // **الوظيفة الرئيسية للدردشة النصية**
+        // **الوظيفة الرئيسية للدردشة النصية (OpenRouter)**
         async function sendMessage() {
             const text = input.value.trim();
             if (!text) return;
+            
+            if (!OPENROUTER_API_KEY || OPENROUTER_API_KEY === "sk-or-v1-abc123def456ghi789jkl0mno-pqrstuvwxyz") {
+                showToast("❌ خطأ: مفتاح OpenRouter API غير مُعدّ. يرجى إضافته في الكود.");
+                return;
+            }
 
             addMessage('user', text, text);
             input.value = '';
@@ -873,49 +984,69 @@
             translationHint.style.display = 'none';
             currentTranslation = ''; 
             
-            // إضافة رسالة مؤقتة لتشغيل الدوران
             const tempAvatar = addMessage('ai', '...', '...').classList.add('thinking');
             
             status.textContent = 'جارٍ التفاعل...'; 
             sendBtn.disabled = true;
             imgBtn.disabled = true;
+            
+            const selectedModel = textModelSelector.value;
 
             try {
-                const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + TEXT_MODEL + ':generateContent?key=' + API_KEY, {
+                const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: text }] }] })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                        'HTTP-Referer': YOUR_SITE_URL, // مطلوب
+                        'X-Title': 'Viewst AI Chat' // اختياري
+                    },
+                    body: JSON.stringify({
+                        model: selectedModel,
+                        messages: [{ role: 'user', content: text }]
+                    })
                 });
+                
+                if (!res.ok) {
+                    const errorData = await res.json();
+                    throw new Error(errorData?.error?.message || `HTTP error! status: ${res.status}`);
+                }
+
                 const data = await res.json();
-                const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "تعذر الحصول على رد. (الرجاء التحقق من API Key).";
-                // نستخدم <br> بدلاً من \n لعرض الأسطر الجديدة في HTML
+                const reply = data?.choices?.[0]?.message?.content || "تعذر الحصول على رد. (الرجاء التحقق من API Key وموقعك).";
+                
                 const formattedReply = reply.replace(/\n/g, '<br>'); 
                 
-                // إزالة الرسالة المؤقتة ثم إضافة الرد
                 chat.lastChild.remove(); 
                 addMessage('ai', formattedReply, reply);
                 
                 status.textContent = 'جاهز ✓'; 
             } catch (e) {
-                // إزالة الرسالة المؤقتة في حالة الخطأ
+                console.error("OpenRouter error:", e);
                 chat.lastChild.remove();
-                addMessage('ai', 'حدث خطأ في الاتصال، حاول مجددًا. (خطأ في الشبكة أو API).', 'حدث خطأ في الاتصال، حاول مجددًا.');
-                status.textContent = 'انقطاع في الاتصال ❌';
+                addMessage('ai', `حدث خطأ: ${e.message}`, `حدث خطأ: ${e.message}`);
+                status.textContent = 'خطأ في الاتصال ❌';
             } finally {
                 sendBtn.disabled = false;
                 imgBtn.disabled = false;
             }
         }
 
-        // **الوظيفة الرئيسية لتوليد الصور**
+        // **الوظيفة الرئيسية لتوليد الصور (Hugging Face)**
         async function generateImage() {
             const text = input.value.trim();
             if (!text) {
                 showToast('اكتب وصفاً للصورة أولاً');
                 return;
             }
+            
+            if (!HF_API_KEY || HF_API_KEY === "hf_...") {
+                showToast("❌ خطأ: مفتاح Hugging Face API غير مُعدّ. يرجى إضافته في الكود.");
+                return;
+            }
 
             const originalText = text;
+            // استخدام الوصف المترجم أو الأصلي
             const promptToUse = currentTranslation || text;
 
             addMessage('user', originalText, originalText);
@@ -924,46 +1055,63 @@
             translationHint.style.display = 'none';
             currentTranslation = ''; 
 
-            // إضافة رسالة مؤقتة لتشغيل الدوران
             const tempAvatar = addMessage('ai', 'جارٍ التوليد، يرجى الانتظار...', 'جارٍ التوليد، يرجى الانتظار...').classList.add('thinking');
             
             status.textContent = 'جارٍ توليد الصورة...'; 
             imgBtn.disabled = true;
             sendBtn.disabled = true;
 
+            // `currentStyle` يحمل الآن اسم النموذج
+            const modelName = currentStyle;
+
             try {
-                const stylePrompts = {
-                    text2img: promptToUse,
-                    anime: promptToUse + ', anime style, colorful, detailed',
-                    fantasy: promptToUse + ', fantasy art, magical, epic',
-                    photorealistic: promptToUse + ', photorealistic, ultra detailed, 8k',
-                    abstract: promptToUse + ', abstract art, creative, modern',
-                    portrait: promptToUse + ', portrait, detailed face, professional'
-                };
+                const res = await fetch(
+                    `https://api-inference.huggingface.co/models/${modelName}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${HF_API_KEY}`
+                        },
+                        body: JSON.stringify({ inputs: promptToUse })
+                    }
+                );
 
-                let enhanced = stylePrompts[currentStyle] || promptToUse;
-                enhanced += ', high quality, masterpiece';
-
-                // Pollinations image generation API
-                const seed = Math.floor(Math.random() * 1000000);
-                // ✨ إضافة &nologo=true لضمان عدم ظهور الشعار
-                const url = 'https://image.pollinations.ai/prompt/' + encodeURIComponent(enhanced) + '?width=1024&height=1024&seed=' + seed + '&nologo=true';
-
-                const res = await fetch(url, { method: 'GET', mode: 'cors' });
-                if (!res.ok) throw new Error('خطأ من خادم التوليد');
+                // حالة خاصة: النموذج قيد التحميل
+                if (res.status === 503) {
+                    const errorData = await res.json();
+                    const waitTime = Math.ceil(errorData.estimated_time) || 30;
+                    chat.lastChild.remove();
+                    addMessage('ai', `⏳ النموذج (${modelName}) قيد التحميل حالياً. يرجى الانتظار حوالي ${waitTime} ثانية والمحاولة مرة أخرى.`, 'النموذج قيد التحميل.');
+                    status.textContent = 'النموذج قيد التحميل ⏳';
+                    return; // إنهاء الوظيفة مبكراً
+                }
                 
-                // إزالة الرسالة المؤقتة
-                chat.lastChild.remove();
+                if (!res.ok) {
+                    const errorData = await res.json();
+                    throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
+                }
 
-                addImage('ai', url, originalText);
+                // API يعيد الصورة كـ blob
+                const imageBlob = await res.blob();
+                
+                // التأكد من أن النوع هو صورة
+                if (!imageBlob.type.startsWith('image/')) {
+                     throw new Error('الاستجابة لم تكن صورة. قد يكون النموذج غير متوافق مع text-to-image.');
+                }
+                
+                // إنشاء URL محلي للصورة
+                const imageUrl = URL.createObjectURL(imageBlob);
+
+                chat.lastChild.remove();
+                addImage('ai', imageUrl, originalText);
                 status.textContent = 'تم التوليد ✓';
                 showToast('تم إنشاء الصورة ✓');
+
             } catch (e) {
                 console.error("Image generation error:", e);
-                // إزالة الرسالة المؤقتة في حالة الخطأ
                 chat.lastChild.remove();
-
-                addMessage('ai', 'تعذر توليد الصورة، حاول مجدداً بوصف أقصر أو مختلف.', 'تعذر توليد الصورة، حاول مجدداً.');
+                addMessage('ai', `تعذر توليد الصورة: ${e.message}`, `تعذر توليد الصورة: ${e.message}`);
                 status.textContent = 'خطأ في التوليد ❌';
             } finally {
                 imgBtn.disabled = false;
@@ -984,7 +1132,7 @@
         
         // --- Initial Message ---
         setTimeout(function() {
-            addMessage('ai', 'مرحباً! أنا Viewst، مساعدك الذكي لتوليد الصور والدردشة. لتوليد صورة اضغط على زر "🎨".', 'مرحباً! أنا Viewst، مساعدك الذكي لتوليد الصور والدردشة. لتوليد صورة اضغط على زر "🎨".');
+            addMessage('ai', 'مرحباً! أنا Viewst. اختر نموذج دردشة من القائمة أعلاه، أو اكتب وصفاً واضغط "🎨" لتوليد صورة.', 'مرحباً! أنا Viewst. اختر نموذج دردشة من القائمة أعلاه، أو اكتب وصفاً واضغط "🎨" لتوليد صورة.');
         }, 500);
     </script>
 </body>
