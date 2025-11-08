@@ -1,0 +1,10 @@
+{
+  "rules": [
+    {
+      "userAgent": "*",
+      "allow": "/",
+      "disallow": ["/admin", "/api"]
+    }
+  ],
+  "sitemaps": ["https://acode-academy.vercel.app/sitemap.xml"]
+}
