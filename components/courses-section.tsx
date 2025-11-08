@@ -130,7 +130,11 @@ export function CoursesSection() {
 
         <div className="text-center mt-12">
           <Button asChild size="lg" variant="outline">
-            <a href="https://www.youtube.com/channel/ACodeAcademy" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://studio.youtube.com/channel/UChYOfUMgT20CkftUZ7AOwlQ/videos/upload?filter=%5B%5D&sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               عرض جميع الدروس على اليوتيوب
             </a>
           </Button>

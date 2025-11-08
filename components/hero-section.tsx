@@ -22,7 +22,11 @@ export function HeroSection() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-            <a href="https://www.youtube.com/channel/ACodeAcademy" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.youtube.com/channel/UChYOfUMgT20CkftUZ7AOwlQ"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               ابدأ التعلم الآن <ArrowRight className="w-4 h-4 mr-2" />
             </a>
           </Button>
